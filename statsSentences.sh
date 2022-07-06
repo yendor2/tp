@@ -1,36 +1,30 @@
 #!/bin/bash
 
+#Indicador estadístico de longitud de oraciones (la más corta, la más larga y elpromedio de longitud).
+
 [ ! -f $1 ] && echo "Ingrese la ubicacion correcta del archivo de texto a analizar" && exit 1
 
-ISUPPER=false
-COUNT=0
+countLetras=0
+countOraciones=0
+minLongitud=1000
+maxLongitud=0
+sumaLongitud=0
 
-while IFS= read -r line
+for palabra in $(cat $1)
 do
-LEN_LINEA=${#line}
-  for ((i=0; i<$LEN_LINEA; i++))
-  do
-  CARACTER=${line:i:1}
-  COUNT=$((COUNT+1))
-  [[ $CARACTER =~ ['.'] ]] && TAMANIO=$((COUNT-1)) && oraciones=("${oraciones[@]}" $TAMANIO) && COUNT=0
-  done
-done < $1
-
-SUMA=0
-MIN=${oraciones[0]}
-MAX=${oraciones[0]}
-
-for i in "${oraciones[@]}"
-do
-  SUMA=$((i+SUMA))
-  [ $i -lt $MIN ] && MIN=$i
-  [ $i -gt $MAX ] && MAX=$i
-  repetidas[$i]=$((repetidas[i]+1)) 
+         [[ ! $palabra =~ ['.']$ ]] && countLetras=$(($(echo $palabra | wc -m)-1+countLetras)) 
+        
+	 if [[ $palabra =~ ['.']$ ]]
+	 then
+		 countLetras=$(($(echo $palabra | wc -m)-2+countLetras))
+		 [[ $countLetras -lt $minLongitud ]] && minLongitud=$countLetras
+                 [[ $countLetras -gt $maxLongitud ]] && maxLongitud=$countLetras
+	 	 countOraciones=$((countOraciones+1))
+                 sumaLongitud=$((countLetras+sumaLongitud))
+	  	 countLetras=0
+         fi 
 done
 
-CANTIDAD=${#oraciones[@]}
-PROMEDIO=$((SUMA/CANTIDAD))
-
-echo El minimo es $MIN y se repitio "${repetidas[$MIN]}" veces
-echo El maximo es $MAX y se repitio "${repetidas[$MAX]}" veces
-echo El promedio total es $PROMEDIO
+echo La oracion mas corta tiene $minLongitud letras
+echo La oracion mas larga tiene $maxLongitud letras
+echo El promedio de longitud de oraciones es $((sumaLongitud/countOraciones))
