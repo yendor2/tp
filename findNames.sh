@@ -1,19 +1,12 @@
 #!/bin/bash
 
+#Identificación de nombres propios (se identifican sólo si están en este formato Nnnnnnnnn), aunque la palabra no sea un nombre propio realmente. Ejemplos: Mateo, Estonoesunnombre, Ana.
+
 [ ! -f $1 ] && echo "Ingrese la ubicacion correcta del archivo de texto a analizar" && exit 1
 
-ISUPPER=false
-
-while IFS= read -r line
+for palabra in $(cat $1)
 do
-LEN_LINEA=${#line}
-  for ((i=0; i<$LEN_LINEA; i++))
-  do
-  CARACTER=${line:i:1}
-  [[ $CARACTER =~ [' '',''.'] ]] && [[ $ISUPPER = true ]] && ISUPPER=false && echo $PALABRA && PALABRA=""
-  [[ $CARACTER =~ [A-Z] ]] && ISUPPER=true && PALABRA=$CARACTER
-  [[ $CARACTER =~ [a-z] ]] && [[ $ISUPPER = true ]] && PALABRA=${PALABRA}$CARACTER
-  done
-[[ -n PALABRA ]] && [[ $ISUPPER = true ]] && ISUPPER=false && echo $PALABRA && PALABRA=""
-done < $1
+        palabraLimpia=$(echo $palabra | tr -d [',''.'':'';'])
+	[[ $palabraLimpia =~ ^[A-Z] ]] && echo $palabraLimpia 
+done
 
