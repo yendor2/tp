@@ -1,16 +1,13 @@
 #!/bin/bash
 
-#Identificación de nombres propios (se identifican sólo si están en este formato Nnnnnnnnn), aunque la palabra no sea un nombre propio realmente. Ejemplos: Mateo, Estonoesunnombre, Ana.
+#Contador de líneas en blanco.
 
 [ ! -f $1 ] && echo "Ingrese la ubicacion correcta del archivo de texto a analizar" && exit 1
 
 
-cat -n $1
-cat -b $1
+totalLineas=$(cat $1 | wc -l)
+lineasSinBlanco=$(cat  $1 | grep . | wc -l)
 
-for palabra in $(cat $1)
-do
-        palabraLimpia=$(echo $palabra | tr -d [',''.'':'';'])
-        [[ $palabraLimpia =~ ^[A-Z] ]] && echo $palabraLimpia 
-done
+cantLineasBlanco=$((totalLineas-lineasSinBlanco))
 
+echo La cantidad de lineas en blanco es $cantLineasBlanco
