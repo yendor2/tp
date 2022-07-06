@@ -3,39 +3,28 @@
 
 [ ! -f $1 ] && echo "Ingrese la ubicacion correcta del archivo de texto a analizar" && exit 1
 
-COUNT=0
-ALMACENAR=false
-declare -A repetidas
 
-while IFS= read -r line
+suma=0
+min=100
+max=0
+
+for palabra in $(cat $1)
 do
-LEN_LINEA=${#line}
-  for ((i=0; i<$LEN_LINEA; i++))
-  do
-  CARACTER=${line:i:1}
-  
-  [[ $CARACTER =~ [' '] ]] && tamanioPalabras=("${tamanioPalabras[@]}" $COUNT_LETRAS) && COUNT_LETRAS=0
-  [[ ! $CARACTER =~ [',''.'' '] ]] && COUNT_LETRAS=$((COUNT_LETRAS+1))
-  done
-[[ COUNT_LETRAS -ne 0 ]] && tamanioPalabras=("${tamanioPalabras[@]}" $COUNT_LETRAS) && COUNT_LETRAS=0
-done < $1
-
-echo tamanioPalabras ${tamanioPalabras[@]}
-
-SUMA=0
-MIN=${tamanioPalabras[0]}
-MAX=${tamanioPalabras[0]}
-
-for i in "${tamanioPalabras[@]}"
-do
-  SUMA=$((i+SUMA))
-  [ $i -lt $MIN ] && MIN=$i
-  [ $i -gt $MAX ] && MAX=$i
+	echo $palabra
+	tamanio=$(echo $palabra | tr -d [',''.'':'';'] | wc -L)
+	echo $tamanio
+	suma=$((tamanio+suma))
+ 	[ $tamanio -lt $min ] && min=$tamanio
+	[ $tamanio -gt $max ] && max=$tamanio
 done
 
-CANTIDAD=${#tamanioPalabras[@]}
-PROMEDIO=$((SUMA/CANTIDAD))
+cantidad=$(cat $1 | wc -w)
+promedio=$((suma/cantidad))
 
-echo La palabra mas corta tiene $MIN caracteres
-echo La palabra mas larga tiene $MAX caracteres 
-echo El promedio de las longitudes es $PROMEDIO
+echo cantidad $cantidad
+echo suma $suma
+echo promedio $promedio
+echo La palabra mas corta tiene $min caracteres
+echo La palabra mas larga tiene $max caracteres 
+echo El promedio de las longitudes es $promedio
+
