@@ -1,55 +1,8 @@
 #!/bin/bash
 
+#Indicador estadístico de uso de palabras, deben ser de al menos 4(cuatro) letras. (mostrar un Top Ten de estas palabras ordenadas desde la que tiene más apariciones a la que tiene menos). Es decir, filtrar las palabras que tengan al menos 4 letras y de éstas, elegir las 10 más usadas.
+
 [ ! -f $1 ] && echo "Ingrese la ubicacion correcta del archivo de texto a analizar" && exit 1
 
-COUNT=0
-ALMACENAR=false
-declare -A repetidas
+cat $1 | grep -o '[A-Za-z]'* | sort | uniq -ci | sort -r | head -n 10
 
-while IFS= read -r line
-do
-LEN_LINEA=${#line}
-  for ((i=0; i<$LEN_LINEA; i++))
-  do
-  CARACTER=${line:i:1}
-  COUNT=$((COUNT+1))
-  [[ $CARACTER =~ [' '] ]] && COUNT=0 && [[ $ALMACENAR = true ]] && palabras=("${palabras[@]}" $PALABRA) && ALMACENAR=false
-
-
-  [[ $COUNT -ge 1 ]] && [[ ! $CARACTER =~ [',''.'] ]] && PALABRA=${PALABRA}$CARACTER 
-  [[ $CARACTER =~ ' ' ]] && PALABRA=""
-  [[ $COUNT -ge 4 ]] && ALMACENAR=true
-# [[ $COUNT -ge 4 ]] && TAMANIO=$((COUNT-1)) && tamanioPalabras=("${tamanioPalabras[@]}" $TAMANIO)
- # [[ $CARACTER =~ [' '',''.'] ]] && [[ $ISPALABRA = true ]] && ISPALABRA=false && echo $PALABRA  && PALABRA=""
- # [[ $CARACTER =~ [A-Z] ]] && ISPALABRA=true && PALABRA=$CARACTER
- # [[ $CARACTER =~ [a-z] ]] && [[ $ISUPPER = true ]] && PALABRA=${PALABRA}$CARACTER
-
- 
- done
-done < $1
-echo palabras "${palabras[@]}"
-
-for palabra1 in "${palabras[@]}"
-do
-  for palabra2 in "${palabras[@]}"
-  do
-    if [[ $palabra1 = $palabra2 ]] 
-    then
-    echo antes ${repetidas[$palabra1]}
-    repetidas[$palabra1]=expr ${repetidas[palabra1]} + 1
-    echo $((repetidas[palabra1]))
-    repetidas[$palabra1]=$((repetidas[palabra1] + 1))
-    echo despues ${repetidas[$palabra1]}
-    fi
-  done
-done
-
-
-#CANTIDAD=${#tamanioPalabras[@]}
-#PROMEDIO=$((SUMA/CANTIDAD))
-
-#echo tamanio "${tamanioPalabras[@]}"
-echo repetidas ${repetidas[@]}
-#echo El minimo es $MIN y se repitio "${repetidas[$MIN]}" veces
-#echo El maximo es $MAX y se repitio "${repetidas[$MAX]}" veces
-#echo El promedio total es $PROMEDIO
