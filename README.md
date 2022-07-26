@@ -39,36 +39,42 @@ En este repositorio se encuentran los distitnos scripts que realizan diferentes 
 
 En un principio se realizó un branch para cada uno de los script y al final se realizó el merge a la rama principal.
 
-El trabajo consiste en generar un contenedor que al ejecutarse presente un menú de
-opciones de filtrados de un texto dado. Deberán editar un Dockerfile y construir una imagen.
-El texto a analizar debe llamarse "texto.txt" y estar en el mismo directorio ser depositado en un directorio del equipo host y copiar el contenido
-del mismo al contenedor para que lo tenga disponible para su posterior análisis.
-Tanto los scripts, como el Dockerfile y el archivo de texto de entrada, deben estar en el
-repositorio gitlab o github que creen para realizar el desarrollo en equipo.
-Recomendamos trabajar en el repositorio manteniendo la prolijidad y las buenas prácticas
-de git. Una estrategia recomendable es realizar un branch por cada ejercicio e ir integrando
-a la rama principal a medida que los scripts que resuelven cada ejercicio estén listos.
+## Requisitos
 
-* ![Low][low_img] means that the item is **recommended** but can be omitted in some particular situations.
-* ![Medium][medium_img] means that the item is **highly recommended** and can eventually be omitted in some really particular cases. Some elements, if omitted, can have bad repercussions in terms of performance or SEO.
-* ![High][high_img] means that the item **can't be omitted** by any reason. You may cause a dysfunction in your page or have accessibility or SEO issues. The testing priority needs to be on these elements first.
-
-Some resources possess an emoticon to help you understand which type of content / help you may find on the checklist:
-
-* 📖: documentation or article
-* 🛠: online tool / testing tool
-* 📹: media or video content
-
-> You can contribute to the ***Front-End Checklist App*** reading the [CONTRIBUTING.md file](https://github.com/thedaviddias/Front-End-Checklist/blob/master/CONTRIBUTING.md) which explains everything about the project.
----
+➔ Se necesita tener instalado Docker para poder crear la imagen apartir del Dockerfile.
+➔ Tener permiso de administrador.
 
 ## ¿Como usarlo?
 
-All items in the **Front-End Checklist** are required for the majority of the projects, but some elements can be omitted or are not essential (in the case of an administration web app, you may not need RSS feed for example). We choose to use 3 levels of flexibility:
+* Descargar todo el contenido.
+* Desde la terminal dirigirse a la carpeta descargada.
+* Ejecutar desde Bash el siguiente comendo comando:
 
-* ![Low][low_img] means that the item is **recommended** but can be omitted in some particular situations.
-* ![Medium][medium_img] means that the item is **highly recommended** and can eventually be omitted in some really particular cases. Some elements, if omitted, can have bad repercussions in terms of performance or SEO.
-* ![High][high_img] means that the item **can't be omitted** by any reason. You may cause a dysfunction in your page or have accessibility or SEO issues. The testing priority needs to be on these elements first.
+```
+docker build --tag tp:1.0 .
+``` 
+* El comando **build** crea la imagen **tp** con el tag **1.0**
+* Luego ejecutar:
+
+```
+docker images
+``` 
+* Para ver que la imagen se creó correctamente.
+
+```mp
+![img]
+``` 
+* Para crear el contenedor ejecutar el comendo **run**
+
+```
+docker run -it tp:1.0
+``` 
+* Si todo se realizó de forma correcta, tendría que ejecutarse el script **menu.sh**
+
+```mp
+![img]
+``` 
+![Medium][medium_img] 
 
 Some resources possess an emoticon to help you understand which type of content / help you may find on the checklist:
 
@@ -78,7 +84,6 @@ Some resources possess an emoticon to help you understand which type of content 
 
 > You can contribute to the ***Front-End Checklist App*** reading the [CONTRIBUTING.md file](https://github.com/thedaviddias/Front-End-Checklist/blob/master/CONTRIBUTING.md) which explains everything about the project.
 ---
-
 
 
 ## Profesores
@@ -91,3 +96,10 @@ Some resources possess an emoticon to help you understand which type of content 
 
 **[Fabian Aguirre](https://github.com/yendor2)**
 
+
+
+**[⬆ volver arriba](#tabla-de-contenidos)**
+
+[low_img]: data/images/priority/low.svg
+[medium_img]: data/images/priority/medium.svg
+[high_img]: data/images/priority/high.svg
