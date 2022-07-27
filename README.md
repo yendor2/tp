@@ -20,9 +20,6 @@
   <a href="#objetivo">Objetivo</a> • <a href="#autor">Autor</a> • 
 </p>
 
-
-
-
 ---
 
 ## Objetivo
@@ -74,7 +71,12 @@ docker run -it tp:1.0
 ```mp
 ![img]
 ``` 
-![Medium][medium_img] 
+>  ### Descripcion de cada una de las opciones
+>  
+>  #️⃣ **1)** ***SALIR*** => Sale de la aplicación.
+>  
+>  #️⃣ **2)** ***SALIR*** => Sale de la aplicación.
+
 
 Some resources possess an emoticon to help you understand which type of content / help you may find on the checklist:
 
